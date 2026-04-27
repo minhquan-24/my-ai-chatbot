@@ -197,7 +197,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Sparkles, Loader2, Copy, Check, Trash2, X } from "lucide-react";
+import { Send, Bot, User, HeartPulse, Loader2, Copy, Check, Trash2, X } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 
 const DEFAULT_MESSAGE = { 
@@ -211,6 +211,13 @@ export default function Home() {
   const[isLoading, setIsLoading] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const SUGGESTED_PROMPTS =[
+  "Trị ho tại nhà",
+  "Thực đơn giảm cân",
+  "Cách sơ cứu bỏng nước sôi",
+  "Dấu hiệu sốt xuất huyết"
+];
 
   useEffect(() => {
     const savedChat = localStorage.getItem("chat_history");
@@ -281,14 +288,14 @@ export default function Home() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-2 md:p-4">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-cyan-100 p-2 md:p-4">
       <div className="w-full max-w-3xl h-[90vh] md:h-[85vh] flex flex-col bg-white/90 backdrop-blur-lg rounded-2xl md:rounded-3xl shadow-2xl border border-white/30 overflow-hidden">
         
         {/* Header */}
         <div className="flex items-center justify-between px-4 md:px-6 py-4 bg-white/50 border-b border-gray-100">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
-              <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              <HeartPulse className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
             <div>
               <h1 className="text-lg md:text-xl font-bold text-gray-800 tracking-tight">AI Cloud Chatbot</h1>
@@ -391,6 +398,18 @@ export default function Home() {
           )}
           <div ref={messagesEndRef} />
         </div>
+        
+        <div className="flex gap-2 p-2 overflow-x-auto hide-scrollbar">
+  {SUGGESTED_PROMPTS.map((prompt, index) => (
+    <button
+      key={index}
+      onClick={() => setInput(prompt)}
+      className="whitespace-nowrap px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-full text-sm font-medium transition-colors border border-blue-200"
+    >
+      {prompt}
+    </button>
+  ))}
+</div>
 
         {/* Khung nhập */}
         <div className="p-3 md:p-4 bg-white/50 border-t border-gray-100">
